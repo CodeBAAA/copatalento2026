@@ -1,0 +1,890 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>CopaTalento 2026 | Calendarios por equipo y categoría</title>
+  <meta name="description" content="Selecciona un equipo y una categoría de CopaTalento 2026 para abrir o suscribirte a su calendario." />
+  <style>
+    :root {
+      --bg: #03243a;
+      --bg-2: #082b44;
+      --panel: #0d314c;
+      --panel-2: rgba(255,255,255,0.07);
+      --line: rgba(255,255,255,0.14);
+      --text: #f7f8fa;
+      --muted: #c3cfdb;
+      --green: #f39a2b;
+      --green-dark: #d98214;
+      --blue: #0d2740;
+      --white: #ffffff;
+      --nav-bg: #f4f4f4;
+      --nav-text: #102a43;
+      --nav-muted: #6b7a8c;
+      --shadow: 0 22px 52px rgba(0,0,0,.28);
+      --radius: 24px;
+      --max: 1180px;
+    }
+
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0;
+      font-family: Inter, Arial, sans-serif;
+      color: var(--text);
+      background:
+        radial-gradient(circle at top right, rgba(243,154,43,.10), transparent 24%),
+        linear-gradient(180deg, var(--bg) 0%, var(--bg-2) 42%, #062338 100%);
+    }
+
+    a { color: inherit; text-decoration: none; }
+    button, select { font: inherit; }
+
+    .container {
+      width: min(100% - 32px, var(--max));
+      margin: 0 auto;
+    }
+
+    .topbar {
+      position: sticky;
+      top: 0;
+      z-index: 40;
+      background: rgba(244,244,244,.96);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid rgba(16,42,67,.08);
+    }
+
+    .topbar-inner {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 16px;
+      padding: 14px 0;
+      flex-wrap: wrap;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      font-weight: 800;
+      letter-spacing: .2px;
+    }
+
+    .brand-badge {
+      width: 52px;
+      height: 52px;
+      border-radius: 14px;
+      display: grid;
+      place-items: center;
+      background: rgba(13,39,64,.08);
+      border: 1px solid rgba(13,39,64,.10);
+      overflow: hidden;
+      flex-shrink: 0;
+    }
+
+    .brand-badge img {
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+      display: block;
+    }
+
+    .brand-subtitle {
+      display: block;
+      color: var(--nav-muted);
+      font-size: .9rem;
+      font-weight: 500;
+      margin-top: 2px;
+    }
+
+    .nav-actions {
+      display: flex;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+
+    .topbar .btn-secondary {
+      color: var(--nav-text);
+      background: rgba(13,39,64,.10);
+      border: 1px solid rgba(13,39,64,.16);
+      box-shadow: none;
+    }
+
+    .topbar .btn-secondary:hover {
+      background: rgba(13,39,64,.16);
+    }
+
+    .topbar .btn-primary {
+      color: var(--white);
+      background: linear-gradient(135deg, #f39a2b, #d98214);
+      box-shadow: 0 10px 22px rgba(243,154,43,.18);
+    }
+
+    .topbar .btn-primary:hover {
+      filter: brightness(1.03);
+    }
+
+    .btn {
+      border: 0;
+      border-radius: 999px;
+      padding: 12px 18px;
+      font-size: .97rem;
+      font-weight: 700;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      cursor: pointer;
+      transition: transform .18s ease, opacity .18s ease, background .18s ease;
+    }
+
+    .btn:hover { transform: translateY(-2px); }
+    .btn:disabled {
+      opacity: .5;
+      cursor: not-allowed;
+      transform: none;
+    }
+
+    .btn-primary {
+      color: var(--white);
+      background: linear-gradient(135deg, var(--green), var(--green-dark));
+      box-shadow: 0 16px 32px rgba(243,154,43,.22);
+    }
+
+    .btn-secondary {
+      color: var(--white);
+      background: rgba(255,255,255,.12);
+      border: 1px solid rgba(255,255,255,.22);
+      box-shadow: inset 0 1px 0 rgba(255,255,255,.06);
+    }
+
+    .btn-secondary:hover {
+      background: rgba(255,255,255,.18);
+    }
+
+    .hero {
+      padding: 72px 0 28px;
+    }
+
+    .hero-grid {
+      display: grid;
+      grid-template-columns: 1.1fr .9fr;
+      gap: 26px;
+      align-items: center;
+    }
+
+    h1 {
+      margin: 0;
+      font-size: clamp(2.5rem, 5vw, 4.7rem);
+      line-height: 1.02;
+      letter-spacing: -.03em;
+      max-width: 12ch;
+    }
+
+    .highlight {
+      background: linear-gradient(135deg, #ffffff 0%, #f4c17a 55%, #f39a2b 100%);
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+    }
+
+    .hero p {
+      margin: 18px 0 0;
+      max-width: 62ch;
+      line-height: 1.7;
+      color: var(--muted);
+      font-size: 1.05rem;
+    }
+
+    .hero-note {
+      margin-top: 16px;
+      color: #eef4fb;
+      background: rgba(243,154,43,.10);
+      border: 1px solid rgba(243,154,43,.22);
+      border-radius: 16px;
+      padding: 14px 16px;
+      line-height: 1.6;
+      font-size: .95rem;
+    }
+
+    .card {
+      background: linear-gradient(180deg, rgba(255,255,255,.08), rgba(255,255,255,.05));
+      border: 1px solid rgba(255,255,255,.11);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+    }
+
+    .selector-card {
+      padding: 24px;
+    }
+
+    .selector-card h2, .section-head h2 {
+      margin: 0 0 8px;
+      font-size: clamp(1.6rem, 3vw, 2.2rem);
+    }
+
+    .selector-card p, .section-head p {
+      margin: 0;
+      color: var(--muted);
+      line-height: 1.65;
+    }
+
+    .form-grid {
+      margin-top: 22px;
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0,1fr));
+      gap: 16px;
+    }
+
+    .field label {
+      display: block;
+      margin-bottom: 8px;
+      font-size: .92rem;
+      color: #dbe7f7;
+      font-weight: 700;
+    }
+
+    .field select {
+      width: 100%;
+      border-radius: 16px;
+      border: 1px solid rgba(255,255,255,.12);
+      background: rgba(255,255,255,.06);
+      color: var(--text);
+      padding: 14px 16px;
+      outline: none;
+    }
+
+    .field select option { color: #111827; }
+
+    .selection-result {
+      margin-top: 22px;
+      padding: 18px;
+      border-radius: 18px;
+      background: rgba(255,255,255,.05);
+      border: 1px solid rgba(255,255,255,.08);
+    }
+
+    .pill-row {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+      margin-bottom: 12px;
+    }
+
+    .pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 8px 12px;
+      border-radius: 999px;
+      background: rgba(255,255,255,.08);
+      border: 1px solid rgba(255,255,255,.1);
+      color: #e8f0fb;
+      font-size: .9rem;
+      font-weight: 700;
+    }
+
+    .selection-title {
+      margin: 0 0 8px;
+      font-size: 1.35rem;
+    }
+
+    .selection-copy {
+      margin: 0;
+      color: var(--muted);
+      line-height: 1.65;
+    }
+
+    .action-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      margin-top: 18px;
+    }
+
+    .helper {
+      margin-top: 12px;
+      font-size: .92rem;
+      line-height: 1.6;
+      color: #dce8f8;
+    }
+
+    section { padding: 28px 0; }
+
+    .section-head { margin-bottom: 18px; }
+
+    .teams-grid {
+      display: grid;
+      grid-template-columns: repeat(6, minmax(0,1fr));
+      gap: 12px;
+    }
+
+    .team-chip {
+      padding: 16px 12px;
+      text-align: center;
+      border-radius: 18px;
+      background: var(--panel-2);
+      border: 1px solid var(--line);
+      color: #eef4fb;
+      font-weight: 700;
+      min-height: 126px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 12px;
+    }
+
+    .team-logo {
+      width: 62px;
+      height: 62px;
+      object-fit: contain;
+      display: block;
+      filter: drop-shadow(0 4px 10px rgba(0,0,0,.18));
+    }
+
+    .team-code {
+      font-size: 1rem;
+      letter-spacing: .02em;
+    }
+
+    .steps {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0,1fr));
+      gap: 18px;
+    }
+
+    .step {
+      padding: 22px;
+      background: var(--panel-2);
+      border: 1px solid var(--line);
+      border-radius: 20px;
+    }
+
+    .step-number {
+      width: 42px;
+      height: 42px;
+      border-radius: 50%;
+      display: grid;
+      place-items: center;
+      background: rgba(243,154,43,.16);
+      color: #ffd39d;
+      font-weight: 800;
+      margin-bottom: 14px;
+    }
+
+    .step h3 {
+      margin: 0 0 8px;
+      font-size: 1.08rem;
+    }
+
+    .step p {
+      margin: 0;
+      color: var(--muted);
+      line-height: 1.65;
+    }
+
+    .modal {
+      position: fixed;
+      inset: 0;
+      display: none;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+      background: rgba(3,8,15,.72);
+      z-index: 60;
+    }
+
+    .modal.is-open { display: flex; }
+
+    .modal-card {
+      width: min(100%, 680px);
+      background: linear-gradient(180deg, #102030, #0b1724);
+      border: 1px solid rgba(255,255,255,.1);
+      border-radius: 24px;
+      box-shadow: var(--shadow);
+      padding: 24px;
+    }
+
+    .modal-head {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 14px;
+    }
+
+    .modal-head h3 {
+      margin: 0;
+      font-size: 1.35rem;
+    }
+
+    .icon-btn {
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      border: 1px solid rgba(255,255,255,.12);
+      background: rgba(255,255,255,.06);
+      color: var(--text);
+      cursor: pointer;
+    }
+
+    .modal p, .modal li {
+      color: var(--muted);
+      line-height: 1.7;
+    }
+
+    .url-box {
+      margin-top: 14px;
+      padding: 14px;
+      border-radius: 16px;
+      background: rgba(255,255,255,.06);
+      border: 1px solid rgba(255,255,255,.1);
+      word-break: break-all;
+      color: #eff6ff;
+      font-size: .95rem;
+    }
+
+    footer {
+      padding: 30px 0 48px;
+      text-align: center;
+      color: var(--muted);
+      font-size: .95rem;
+    }
+
+    @media (max-width: 1060px) {
+      .hero-grid,
+      .form-grid,
+      .steps {
+        grid-template-columns: 1fr;
+      }
+      .teams-grid { grid-template-columns: repeat(4, minmax(0,1fr)); }
+    }
+
+    @media (max-width: 680px) {
+      .hero { padding-top: 48px; }
+      .teams-grid { grid-template-columns: repeat(2, minmax(0,1fr)); }
+      .action-row { flex-direction: column; }
+      .action-row .btn { width: 100%; }
+    }
+  </style>
+</head>
+<body>
+  <header class="topbar">
+    <div class="container topbar-inner">
+      <div class="brand">
+        <div class="brand-badge">
+          <img src="assets/logo-copatalento.png" alt="Logo CopaTalento" onerror="this.style.display='none'; this.parentNode.textContent='⚽';" />
+        </div>
+        <div>
+          <div style="color: var(--nav-text);">CopaTalento 2026</div>
+          <span class="brand-subtitle">Calendarios por equipo y categoría</span>
+        </div>
+      </div>
+      <nav class="nav-actions">
+        <a class="btn btn-secondary" href="#seleccion">Seleccionar calendario</a>
+        <a class="btn btn-primary" href="#como-funciona">Cómo suscribirse</a>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    <section class="hero">
+      <div class="container hero-grid">
+        <div>
+          <h1>Encuentra el <span class="highlight">calendario exacto</span> de tu equipo</h1>
+          <p>
+            Selecciona el equipo y luego la categoría para abrir su calendario público o suscribirte desde Google Calendar, Outlook, Apple Calendar u otras apps compatibles con iCal.
+          </p>
+          <div class="hero-note">
+            Cada categoría está pensada como un calendario independiente. Solo debes reemplazar los enlaces reales de cada categoría dentro del objeto <strong>TEAM_CALENDARS</strong> en el código.
+          </div>
+        </div>
+
+        <div class="card selector-card" id="seleccion">
+          <h2>Selecciona tu calendario</h2>
+          <p>Primero elige el equipo. Después se habilitarán las categorías disponibles para ese equipo.</p>
+
+          <div class="form-grid">
+            <div class="field">
+              <label for="teamSelect">Equipo</label>
+              <select id="teamSelect">
+                <option value="">Selecciona un equipo</option>
+              </select>
+            </div>
+
+            <div class="field">
+              <label for="categorySelect">Categoría</label>
+              <select id="categorySelect" disabled>
+                <option value="">Primero selecciona un equipo</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="selection-result" id="selectionResult">
+            <div class="pill-row">
+              <span class="pill">Equipo: —</span>
+              <span class="pill">Categoría: —</span>
+            </div>
+            <h3 class="selection-title">Todavía no has seleccionado un calendario</h3>
+            <p class="selection-copy">Cuando elijas una categoría, aquí aparecerán los botones para abrir el calendario y suscribirte según tu plataforma.</p>
+            <div class="action-row">
+              <button class="btn btn-primary" id="googleBtn" disabled>Google Calendar</button>
+              <button class="btn btn-secondary" id="outlookBtn" disabled>Outlook / Apple / iCal</button>
+              <button class="btn btn-secondary" id="copyIcsBtn" disabled>Copiar enlace iCal</button>
+            </div>
+            <div class="helper" id="helperText">Google Calendar agrega calendarios publicados desde <strong>Other calendars → From URL</strong>. Outlook permite suscribirse a calendarios iCal en línea.</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <div class="container">
+        <div class="section-head">
+          <h2>Equipos visibles en la clasificación</h2>
+          <p>Aquí puedes mostrar cada equipo con su logo. Solo debes guardar las imágenes y asignar la ruta correspondiente en el objeto <strong>TEAM_LOGOS</strong>.</p>
+        </div>
+        <div class="teams-grid" id="teamsGrid"></div>
+      </div>
+    </section>
+
+    <section id="como-funciona">
+      <div class="container">
+        <div class="section-head">
+          <h2>Cómo funciona la suscripción</h2>
+          <p>La página separa la experiencia por plataforma para evitar los errores de acceso que te daban los enlaces anteriores.</p>
+        </div>
+        <div class="steps">
+          <div class="step">
+            <div class="step-number">1</div>
+            <h3>Google Calendar</h3>
+            <p>El botón de Google abre la pantalla para agregar calendarios por URL y copia automáticamente el enlace iCal del calendario seleccionado.</p>
+          </div>
+          <div class="step">
+            <div class="step-number">2</div>
+            <h3>Outlook / Apple / iCal</h3>
+            <p>El botón secundario usa el enlace iCal del calendario. Outlook y otras apps compatibles pueden suscribirse a ese formato y recibir actualizaciones.</p>
+          </div>
+          <div class="step">
+            <div class="step-number">3</div>
+            <h3>Calendarios únicos por categoría</h3>
+            <p>Cada categoría tiene su propio bloque de enlaces. Cuando me pases los calendarios reales, se reemplazan uno por uno sin tocar el diseño.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <div class="modal" id="googleModal" aria-hidden="true">
+    <div class="modal-card">
+      <div class="modal-head">
+        <h3>Agregar en Google Calendar</h3>
+        <button class="icon-btn" id="closeModalBtn" aria-label="Cerrar">✕</button>
+      </div>
+      <p>
+        Ya copiamos el enlace iCal del calendario. En Google Calendar, ve a <strong>Other calendars → Add other calendars → From URL</strong> y pega la URL copiada.
+      </p>
+      <ol>
+        <li>Haz clic en <strong>Abrir Google Calendar</strong>.</li>
+        <li>En la columna izquierda, elige <strong>From URL</strong>.</li>
+        <li>Pega el enlace iCal que aparece abajo.</li>
+        <li>Guarda el calendario.</li>
+      </ol>
+      <div class="url-box" id="modalUrlBox">Selecciona una categoría para ver su enlace iCal.</div>
+      <div class="action-row">
+        <a class="btn btn-primary" id="openGoogleAddByUrl" href="https://calendar.google.com/calendar/u/0/r/settings/addbyurl" target="_blank" rel="noopener noreferrer">Abrir Google Calendar</a>
+        <button class="btn btn-secondary" id="modalCopyBtn">Copiar enlace otra vez</button>
+      </div>
+    </div>
+  </div>
+
+  <footer>
+    CopaTalento 2026 · Selección dinámica por equipo y categoría
+  </footer>
+
+  <script>
+    const DEFAULT_PUBLIC_URL = 'https://calendar.google.com/calendar/u/4?cid=Y29wYXRhbGVudG9jYWxlbmRhcmlvQGdtYWlsLmNvbQ';
+    const DEFAULT_ICAL_URL = 'https://calendar.google.com/calendar/ical/copatalentocalendario%40gmail.com/public/basic.ics';
+
+    // Logo principal del sitio:
+    // coloca tu archivo en assets/logo-copatalento.png
+    // También puedes cambiar esa ruta directamente en el <img> del header.
+
+    // Logos por equipo:
+    // Guarda las imágenes, por ejemplo, en assets/teams/
+    // y reemplaza cada valor por la ruta real de cada logo.
+    const TEAM_LOGOS = {
+      AHP: 'assets/teams/ahp.png',
+      AIP: 'assets/teams/aip.png',
+      BAL: 'assets/teams/bal.png',
+      BRA: 'assets/teams/bra.png',
+      CCP: 'assets/teams/ccp.png',
+      CEP: 'assets/teams/cep.png',
+      CJP: 'assets/teams/cjp.png',
+      CLS: 'assets/teams/cls.png',
+      CPM: 'assets/teams/cpm.png',
+      CRP: 'assets/teams/crp.png',
+      CSA: 'assets/teams/csa.png',
+      CSM: 'assets/teams/csm.png',
+      ECP: 'assets/teams/ecp.png',
+      IAE: 'assets/teams/iae.png',
+      IAP: 'assets/teams/iap.png',
+      ICP: 'assets/teams/icp.png',
+      IEF: 'assets/teams/ief.png',
+      IFN: 'assets/teams/ifn.png',
+      IJA: 'assets/teams/ija.png',
+      IPA: 'assets/teams/ipa.png',
+      IRU: 'assets/teams/iru.png',
+      JDM: 'assets/teams/jdm.png',
+      KCS: 'assets/teams/kcs.png',
+      MDA: 'assets/teams/mda.png',
+      MET: 'assets/teams/met.png',
+      OIS: 'assets/teams/ois.png',
+      PAS: 'assets/teams/pas.png',
+      SAP: 'assets/teams/sap.png',
+      TJS: 'assets/teams/tjs.png',
+      TOS: 'assets/teams/tos.png',
+      USP: 'assets/teams/usp.png'
+    };
+
+    const TEAM_CALENDARS = {
+      AIP: [
+        { name: 'U-8 Abierta', publicUrl: DEFAULT_PUBLIC_URL, icalUrl: DEFAULT_ICAL_URL },
+        { name: 'U-10 Masculino', publicUrl: DEFAULT_PUBLIC_URL, icalUrl: DEFAULT_ICAL_URL }
+      ],
+      AHP: [
+        { name: 'U-8 Abierta', publicUrl: DEFAULT_PUBLIC_URL, icalUrl: DEFAULT_ICAL_URL }
+      ],
+      BRA: [
+        { name: 'U-8 Abierta', publicUrl: DEFAULT_PUBLIC_URL, icalUrl: DEFAULT_ICAL_URL }
+      ],
+      CEP: [
+        { name: 'U-10 Masculino', publicUrl: DEFAULT_PUBLIC_URL, icalUrl: DEFAULT_ICAL_URL }
+      ],
+      CJP: [
+        { name: 'U-8 Abierta', publicUrl: DEFAULT_PUBLIC_URL, icalUrl: DEFAULT_ICAL_URL },
+        { name: 'U-10 Masculino', publicUrl: DEFAULT_PUBLIC_URL, icalUrl: DEFAULT_ICAL_URL }
+      ],
+      CLS: [
+        { name: 'U-8 Abierta', publicUrl: DEFAULT_PUBLIC_URL, icalUrl: DEFAULT_ICAL_URL },
+        { name: 'U-10 Masculino', publicUrl: DEFAULT_PUBLIC_URL, icalUrl: DEFAULT_ICAL_URL }
+      ],
+      CRP: [
+        { name: 'U-8 Abierta', publicUrl: DEFAULT_PUBLIC_URL, icalUrl: DEFAULT_ICAL_URL }
+      ],
+      CSA: [
+        { name: 'U-8 Abierta', publicUrl: DEFAULT_PUBLIC_URL, icalUrl: DEFAULT_ICAL_URL },
+        { name: 'U-10 Masculino', publicUrl: DEFAULT_PUBLIC_URL, icalUrl: DEFAULT_ICAL_URL }
+      ],
+      CSM: [
+        { name: 'U-10 Masculino', publicUrl: DEFAULT_PUBLIC_URL, icalUrl: DEFAULT_ICAL_URL }
+      ],
+      ECP: [
+        { name: 'U-8 Abierta', publicUrl: DEFAULT_PUBLIC_URL, icalUrl: DEFAULT_ICAL_URL },
+        { name: 'U-10 Masculino', publicUrl: DEFAULT_PUBLIC_URL, icalUrl: DEFAULT_ICAL_URL }
+      ],
+      IAP: [
+        { name: 'General', publicUrl: DEFAULT_PUBLIC_URL, icalUrl: DEFAULT_ICAL_URL }
+      ],
+      IAE: [
+        { name: 'General', publicUrl: DEFAULT_PUBLIC_URL, icalUrl: DEFAULT_ICAL_URL }
+      ],
+      ICP: [
+        { name: 'General', publicUrl: DEFAULT_PUBLIC_URL, icalUrl: DEFAULT_ICAL_URL }
+      ],
+      IEF: [
+        { name: 'General', publicUrl: DEFAULT_PUBLIC_URL, icalUrl: DEFAULT_ICAL_URL }
+      ],
+      IFN: [
+        { name: 'General', publicUrl: DEFAULT_PUBLIC_URL, icalUrl: DEFAULT_ICAL_URL }
+      ],
+      IJA: [
+        { name: 'U-8 Abierta', publicUrl: DEFAULT_PUBLIC_URL, icalUrl: DEFAULT_ICAL_URL }
+      ],
+      IPA: [
+        { name: 'U-8 Abierta', publicUrl: DEFAULT_PUBLIC_URL, icalUrl: DEFAULT_ICAL_URL }
+      ],
+      IRU: [
+        { name: 'General', publicUrl: DEFAULT_PUBLIC_URL, icalUrl: DEFAULT_ICAL_URL }
+      ],
+      JDM: [
+        { name: 'General', publicUrl: DEFAULT_PUBLIC_URL, icalUrl: DEFAULT_ICAL_URL }
+      ],
+      KCS: [
+        { name: 'General', publicUrl: DEFAULT_PUBLIC_URL, icalUrl: DEFAULT_ICAL_URL }
+      ],
+      MDA: [
+        { name: 'U-10 Masculino', publicUrl: DEFAULT_PUBLIC_URL, icalUrl: DEFAULT_ICAL_URL }
+      ],
+      MET: [
+        { name: 'U-8 Abierta', publicUrl: DEFAULT_PUBLIC_URL, icalUrl: DEFAULT_ICAL_URL }
+      ],
+      OIS: [
+        { name: 'General', publicUrl: DEFAULT_PUBLIC_URL, icalUrl: DEFAULT_ICAL_URL }
+      ],
+      PAS: [
+        { name: 'General', publicUrl: DEFAULT_PUBLIC_URL, icalUrl: DEFAULT_ICAL_URL }
+      ],
+      SAP: [
+        { name: 'General', publicUrl: DEFAULT_PUBLIC_URL, icalUrl: DEFAULT_ICAL_URL }
+      ],
+      TJS: [
+        { name: 'General', publicUrl: DEFAULT_PUBLIC_URL, icalUrl: DEFAULT_ICAL_URL }
+      ],
+      TOS: [
+        { name: 'General', publicUrl: DEFAULT_PUBLIC_URL, icalUrl: DEFAULT_ICAL_URL }
+      ],
+      USP: [
+        { name: 'U-10 Masculino', publicUrl: DEFAULT_PUBLIC_URL, icalUrl: DEFAULT_ICAL_URL }
+      ],
+      BAL: [
+        { name: 'General', publicUrl: DEFAULT_PUBLIC_URL, icalUrl: DEFAULT_ICAL_URL }
+      ],
+      CCP: [
+        { name: 'General', publicUrl: DEFAULT_PUBLIC_URL, icalUrl: DEFAULT_ICAL_URL }
+      ],
+      CPM: [
+        { name: 'General', publicUrl: DEFAULT_PUBLIC_URL, icalUrl: DEFAULT_ICAL_URL }
+      ]
+    };
+
+    const teamSelect = document.getElementById('teamSelect');
+    const categorySelect = document.getElementById('categorySelect');
+    const teamsGrid = document.getElementById('teamsGrid');
+    const selectionResult = document.getElementById('selectionResult');
+    const googleModal = document.getElementById('googleModal');
+    const closeModalBtn = document.getElementById('closeModalBtn');
+    const modalUrlBox = document.getElementById('modalUrlBox');
+    const modalCopyBtn = document.getElementById('modalCopyBtn');
+
+    let selectedCalendar = null;
+
+    function getTeams() {
+      return Object.keys(TEAM_CALENDARS).sort((a, b) => a.localeCompare(b));
+    }
+
+    function renderTeams() {
+      const teams = getTeams();
+
+      teamSelect.innerHTML = '<option value="">Selecciona un equipo</option>' +
+        teams.map(team => `<option value="${team}">${team}</option>`).join('');
+
+      teamsGrid.innerHTML = teams.map(team => {
+        const logo = TEAM_LOGOS[team];
+        return `
+          <div class="team-chip">
+            ${logo ? `<img class="team-logo" src="${logo}" alt="Logo ${team}" onerror="this.remove();" />` : ''}
+            <span class="team-code">${team}</span>
+          </div>
+        `;
+      }).join('');
+    }
+
+    function populateCategories(team) {
+      const categories = TEAM_CALENDARS[team] || [];
+      if (!team || categories.length === 0) {
+        categorySelect.disabled = true;
+        categorySelect.innerHTML = '<option value="">Primero selecciona un equipo</option>';
+        return;
+      }
+
+      categorySelect.disabled = false;
+      categorySelect.innerHTML = '<option value="">Selecciona una categoría</option>' +
+        categories.map((category, index) => `<option value="${index}">${category.name}</option>`).join('');
+    }
+
+    function updateSelectionView(team, category) {
+      const pills = `<div class="pill-row"><span class="pill">Equipo: ${team || '—'}</span><span class="pill">Categoría: ${category?.name || '—'}</span></div>`;
+
+      if (!team || !category) {
+        selectionResult.innerHTML = `${pills}<h3 class="selection-title">Todavía no has seleccionado un calendario</h3><p class="selection-copy">Cuando elijas una categoría, aquí aparecerán los botones para abrir el calendario y suscribirte según tu plataforma.</p><div class="action-row"><button class="btn btn-primary" id="googleBtn" disabled>Google Calendar</button><button class="btn btn-secondary" id="outlookBtn" disabled>Outlook / Apple / iCal</button><button class="btn btn-secondary" id="copyIcsBtn" disabled>Copiar enlace iCal</button></div><div class="helper" id="helperText">Google Calendar agrega calendarios publicados desde <strong>Other calendars → From URL</strong>. Outlook permite suscribirse a calendarios iCal en línea.</div>`;
+        reconnectDynamicButtons();
+        return;
+      }
+
+      selectionResult.innerHTML = `${pills}<h3 class="selection-title">${team} · ${category.name}</h3><p class="selection-copy">Este bloque se conectará al calendario único de esta categoría. Ahora mismo está enlazado a la URL configurada para <strong>${team} / ${category.name}</strong>.</p><div class="action-row"><button class="btn btn-primary" id="googleBtn">Google Calendar</button><button class="btn btn-secondary" id="outlookBtn">Outlook / Apple / iCal</button><button class="btn btn-secondary" id="copyIcsBtn">Copiar enlace iCal</button></div><div class="helper" id="helperText">Google no ofrece un enlace público universal de un clic para suscribirse a cualquier calendario publicado; por eso este botón copia el enlace iCal y te lleva a la pantalla <strong>From URL</strong>.</div>`;
+      reconnectDynamicButtons();
+    }
+
+    function reconnectDynamicButtons() {
+      const googleBtn = document.getElementById('googleBtn');
+      const outlookBtn = document.getElementById('outlookBtn');
+      const copyIcsBtn = document.getElementById('copyIcsBtn');
+
+      if (googleBtn) googleBtn.addEventListener('click', handleGoogleSubscribe);
+      if (outlookBtn) outlookBtn.addEventListener('click', handleOutlookSubscribe);
+      if (copyIcsBtn) copyIcsBtn.addEventListener('click', handleCopyIcs);
+    }
+
+    async function copyText(value) {
+      if (!value) return;
+      try {
+        await navigator.clipboard.writeText(value);
+      } catch (error) {
+        console.warn('No se pudo copiar al portapapeles', error);
+      }
+    }
+
+    function handleGoogleSubscribe() {
+      if (!selectedCalendar?.icalUrl) return;
+      modalUrlBox.textContent = selectedCalendar.icalUrl;
+      copyText(selectedCalendar.icalUrl);
+      googleModal.classList.add('is-open');
+      googleModal.setAttribute('aria-hidden', 'false');
+    }
+
+    function handleOutlookSubscribe() {
+      if (!selectedCalendar?.icalUrl) return;
+      const outlookFriendlyUrl = selectedCalendar.icalUrl.replace(/^https:/i, 'webcal:');
+      window.open(outlookFriendlyUrl, '_blank', 'noopener,noreferrer');
+    }
+
+    function handleCopyIcs() {
+      if (!selectedCalendar?.icalUrl) return;
+      copyText(selectedCalendar.icalUrl);
+      alert('Enlace iCal copiado al portapapeles.');
+    }
+
+    function closeModal() {
+      googleModal.classList.remove('is-open');
+      googleModal.setAttribute('aria-hidden', 'true');
+    }
+
+    teamSelect.addEventListener('change', () => {
+      const team = teamSelect.value;
+      selectedCalendar = null;
+      populateCategories(team);
+      updateSelectionView(team, null);
+    });
+
+    categorySelect.addEventListener('change', () => {
+      const team = teamSelect.value;
+      const categories = TEAM_CALENDARS[team] || [];
+      const category = categories[Number(categorySelect.value)] || null;
+      selectedCalendar = category;
+      updateSelectionView(team, category);
+    });
+
+    closeModalBtn.addEventListener('click', closeModal);
+    googleModal.addEventListener('click', (event) => {
+      if (event.target === googleModal) closeModal();
+    });
+
+    modalCopyBtn.addEventListener('click', () => {
+      if (!selectedCalendar?.icalUrl) return;
+      copyText(selectedCalendar.icalUrl);
+      alert('Enlace iCal copiado otra vez.');
+    });
+
+    renderTeams();
+    reconnectDynamicButtons();
+
+    // Pruebas básicas en tiempo de ejecución para evitar errores silenciosos.
+    console.assert(Array.isArray(TEAM_CALENDARS.AIP), 'AIP debe tener un arreglo de categorías.');
+    console.assert(typeof TEAM_LOGOS.AIP === 'string', 'AIP debe tener una ruta de logo.');
+    console.assert(getTeams().includes('CSA'), 'CSA debe existir en la lista de equipos.');
+  </script>
+</body>
+</html>
