@@ -818,10 +818,22 @@
       if (copyIcsBtn) copyIcsBtn.addEventListener('click', handleCopyIcs);
     }
 
+    function normalizeCalendarUrl(value) {
+      if (!value) return '';
+      if (value.startsWith('https://') || value.startsWith('http://') || value.startsWith('webcal://')) {
+        return value;
+      }
+      if (value.startsWith('//')) {
+        return `https:${value}`;
+      }
+      return `https://${value.replace(/^\/+/, '')}`;
+    }
+
     async function copyText(value) {
-      if (!value) return;
+      const normalized = normalizeCalendarUrl(value);
+      if (!normalized) return;
       try {
-        await navigator.clipboard.writeText(value);
+        await navigator.clipboard.writeText(normalized);
       } catch (error) {
         console.warn('No se pudo copiar al portapapeles', error);
       }
@@ -829,21 +841,24 @@
 
     function handleGoogleSubscribe() {
       if (!selectedCalendar?.icalUrl) return;
-      modalUrlBox.textContent = selectedCalendar.icalUrl;
-      copyText(selectedCalendar.icalUrl);
+      const normalizedIcalUrl = normalizeCalendarUrl(selectedCalendar.icalUrl);
+      modalUrlBox.textContent = normalizedIcalUrl;
+      copyText(normalizedIcalUrl);
       googleModal.classList.add('is-open');
       googleModal.setAttribute('aria-hidden', 'false');
     }
 
     function handleOutlookSubscribe() {
       if (!selectedCalendar?.icalUrl) return;
-      const outlookFriendlyUrl = selectedCalendar.icalUrl.replace(/^https:/i, 'webcal:');
+      const normalizedIcalUrl = normalizeCalendarUrl(selectedCalendar.icalUrl);
+      const outlookFriendlyUrl = normalizedIcalUrl.replace(/^https:/i, 'webcal:');
       window.open(outlookFriendlyUrl, '_blank', 'noopener,noreferrer');
     }
 
     function handleCopyIcs() {
       if (!selectedCalendar?.icalUrl) return;
-      copyText(selectedCalendar.icalUrl);
+      const normalizedIcalUrl = normalizeCalendarUrl(selectedCalendar.icalUrl);
+      copyText(normalizedIcalUrl);
       alert('Enlace iCal copiado al portapapeles.');
     }
 
@@ -874,7 +889,8 @@
 
     modalCopyBtn.addEventListener('click', () => {
       if (!selectedCalendar?.icalUrl) return;
-      copyText(selectedCalendar.icalUrl);
+      const normalizedIcalUrl = normalizeCalendarUrl(selectedCalendar.icalUrl);
+      copyText(normalizedIcalUrl);
       alert('Enlace iCal copiado otra vez.');
     });
 
@@ -885,6 +901,8 @@
     console.assert(Array.isArray(TEAM_CALENDARS.AIP), 'AIP debe tener un arreglo de categorías.');
     console.assert(typeof TEAM_LOGOS.AIP === 'string', 'AIP debe tener una ruta de logo.');
     console.assert(getTeams().includes('CSA'), 'CSA debe existir en la lista de equipos.');
+    console.assert(normalizeCalendarUrl('//calendar.google.com/test.ics') === 'https://calendar.google.com/test.ics', 'Debe completar URLs que comienzan con //');
+    console.assert(normalizeCalendarUrl('calendar.google.com/test.ics') === 'https://calendar.google.com/test.ics', 'Debe completar URLs sin protocolo.');
   </script>
 </body>
 </html>
