@@ -7,34 +7,34 @@
   <meta name="description" content="Selecciona un equipo y una categoría de CopaTalento 2026 para abrir o suscribirte a su calendario." />
   <style>
     :root {
-      --bg: #03243a;
-      --bg-2: #082b44;
-      --panel: #0d314c;
-      --panel-2: rgba(255,255,255,0.07);
-      --line: rgba(255,255,255,0.14);
-      --text: #f7f8fa;
-      --muted: #c3cfdb;
-      --green: #f39a2b;
-      --green-dark: #d98214;
-      --blue: #0d2740;
+      --bg: #ffffff;
+      --bg-2: #f4f8fc;
+      --panel: #ffffff;
+      --panel-2: #ffffff;
+      --line: #d8e3ef;
+      --text: #16324f;
+      --muted: #5f7691;
+      --orange: #f39a2b;
+      --orange-dark: #d98214;
+      --blue: #0d4d8b;
+      --blue-dark: #0a3c6b;
       --white: #ffffff;
-      --nav-bg: #f4f4f4;
-      --nav-text: #102a43;
-      --nav-muted: #6b7a8c;
-      --shadow: 0 22px 52px rgba(0,0,0,.28);
+      --nav-bg: #0d4d8b;
+      --nav-text: #ffffff;
+      --nav-muted: #dbe8f6;
+      --shadow: 0 16px 36px rgba(13,77,139,.10);
       --radius: 24px;
       --max: 1180px;
     }
 
     * { box-sizing: border-box; }
     html { scroll-behavior: smooth; }
+
     body {
       margin: 0;
       font-family: Inter, Arial, sans-serif;
       color: var(--text);
-      background:
-        radial-gradient(circle at top right, rgba(243,154,43,.10), transparent 24%),
-        linear-gradient(180deg, var(--bg) 0%, var(--bg-2) 42%, #062338 100%);
+      background: linear-gradient(180deg, var(--bg) 0%, var(--bg-2) 100%);
     }
 
     a { color: inherit; text-decoration: none; }
@@ -49,9 +49,9 @@
       position: sticky;
       top: 0;
       z-index: 40;
-      background: rgba(244,244,244,.96);
+      background: linear-gradient(135deg, var(--nav-bg), var(--blue-dark));
       backdrop-filter: blur(12px);
-      border-bottom: 1px solid rgba(16,42,67,.08);
+      border-bottom: 1px solid rgba(255,255,255,.10);
     }
 
     .topbar-inner {
@@ -77,8 +77,8 @@
       border-radius: 14px;
       display: grid;
       place-items: center;
-      background: rgba(13,39,64,.08);
-      border: 1px solid rgba(13,39,64,.10);
+      background: rgba(255,255,255,.12);
+      border: 1px solid rgba(255,255,255,.16);
       overflow: hidden;
       flex-shrink: 0;
     }
@@ -104,27 +104,6 @@
       flex-wrap: wrap;
     }
 
-    .topbar .btn-secondary {
-      color: var(--nav-text);
-      background: rgba(13,39,64,.10);
-      border: 1px solid rgba(13,39,64,.16);
-      box-shadow: none;
-    }
-
-    .topbar .btn-secondary:hover {
-      background: rgba(13,39,64,.16);
-    }
-
-    .topbar .btn-primary {
-      color: var(--white);
-      background: linear-gradient(135deg, #f39a2b, #d98214);
-      box-shadow: 0 10px 22px rgba(243,154,43,.18);
-    }
-
-    .topbar .btn-primary:hover {
-      filter: brightness(1.03);
-    }
-
     .btn {
       border: 0;
       border-radius: 999px;
@@ -140,6 +119,7 @@
     }
 
     .btn:hover { transform: translateY(-2px); }
+
     .btn:disabled {
       opacity: .5;
       cursor: not-allowed;
@@ -148,23 +128,44 @@
 
     .btn-primary {
       color: var(--white);
-      background: linear-gradient(135deg, var(--green), var(--green-dark));
-      box-shadow: 0 16px 32px rgba(243,154,43,.22);
+      background: linear-gradient(135deg, var(--orange), var(--orange-dark));
+      box-shadow: 0 12px 24px rgba(243,154,43,.18);
     }
 
     .btn-secondary {
-      color: var(--white);
-      background: rgba(255,255,255,.12);
-      border: 1px solid rgba(255,255,255,.22);
-      box-shadow: inset 0 1px 0 rgba(255,255,255,.06);
+      color: var(--text);
+      background: #eef5fb;
+      border: 1px solid #d9e7f3;
+      box-shadow: inset 0 1px 0 rgba(255,255,255,.6);
     }
 
     .btn-secondary:hover {
-      background: rgba(255,255,255,.18);
+      background: #e6f0f8;
+    }
+
+    .topbar .btn-secondary {
+      color: var(--white);
+      background: rgba(255,255,255,.12);
+      border: 1px solid rgba(255,255,255,.18);
+      box-shadow: none;
+    }
+
+    .topbar .btn-secondary:hover {
+      background: rgba(255,255,255,.20);
+    }
+
+    .topbar .btn-primary {
+      color: var(--white);
+      background: linear-gradient(135deg, var(--orange), var(--orange-dark));
+      box-shadow: 0 10px 22px rgba(243,154,43,.18);
+    }
+
+    .topbar .btn-primary:hover {
+      filter: brightness(1.03);
     }
 
     .hero {
-      padding: 72px 0 28px;
+      padding: 56px 0 36px;
     }
 
     .hero-grid {
@@ -176,14 +177,15 @@
 
     h1 {
       margin: 0;
-      font-size: clamp(2.5rem, 5vw, 4.7rem);
-      line-height: 1.02;
+      font-size: clamp(2.4rem, 5vw, 4.2rem);
+      line-height: 1.05;
       letter-spacing: -.03em;
       max-width: 12ch;
+      color: var(--blue-dark);
     }
 
     .highlight {
-      background: linear-gradient(135deg, #ffffff 0%, #f4c17a 55%, #f39a2b 100%);
+      background: linear-gradient(135deg, var(--blue) 0%, var(--orange) 100%);
       -webkit-background-clip: text;
       background-clip: text;
       color: transparent;
@@ -199,9 +201,9 @@
 
     .hero-note {
       margin-top: 16px;
-      color: #eef4fb;
-      background: rgba(243,154,43,.10);
-      border: 1px solid rgba(243,154,43,.22);
+      color: var(--text);
+      background: #fff7ec;
+      border: 1px solid #f6d3a3;
       border-radius: 16px;
       padding: 14px 16px;
       line-height: 1.6;
@@ -209,8 +211,8 @@
     }
 
     .card {
-      background: linear-gradient(180deg, rgba(255,255,255,.08), rgba(255,255,255,.05));
-      border: 1px solid rgba(255,255,255,.11);
+      background: linear-gradient(180deg, #ffffff, #fdfefe);
+      border: 1px solid var(--line);
       border-radius: var(--radius);
       box-shadow: var(--shadow);
     }
@@ -219,12 +221,13 @@
       padding: 24px;
     }
 
-    .selector-card h2, .section-head h2 {
+    .selector-card h2 {
       margin: 0 0 8px;
       font-size: clamp(1.6rem, 3vw, 2.2rem);
+      color: var(--blue-dark);
     }
 
-    .selector-card p, .section-head p {
+    .selector-card p {
       margin: 0;
       color: var(--muted);
       line-height: 1.65;
@@ -241,28 +244,30 @@
       display: block;
       margin-bottom: 8px;
       font-size: .92rem;
-      color: #dbe7f7;
+      color: var(--text);
       font-weight: 700;
     }
 
     .field select {
       width: 100%;
       border-radius: 16px;
-      border: 1px solid rgba(255,255,255,.12);
-      background: rgba(255,255,255,.06);
+      border: 1px solid var(--line);
+      background: #ffffff;
       color: var(--text);
       padding: 14px 16px;
       outline: none;
     }
 
-    .field select option { color: #111827; }
+    .field select option {
+      color: #111827;
+    }
 
     .selection-result {
       margin-top: 22px;
       padding: 18px;
       border-radius: 18px;
-      background: rgba(255,255,255,.05);
-      border: 1px solid rgba(255,255,255,.08);
+      background: #f7fbff;
+      border: 1px solid var(--line);
     }
 
     .pill-row {
@@ -278,9 +283,9 @@
       gap: 8px;
       padding: 8px 12px;
       border-radius: 999px;
-      background: rgba(255,255,255,.08);
-      border: 1px solid rgba(255,255,255,.1);
-      color: #e8f0fb;
+      background: #edf5fc;
+      border: 1px solid #d7e6f4;
+      color: var(--text);
       font-size: .9rem;
       font-weight: 700;
     }
@@ -288,6 +293,7 @@
     .selection-title {
       margin: 0 0 8px;
       font-size: 1.35rem;
+      color: var(--blue-dark);
     }
 
     .selection-copy {
@@ -307,82 +313,7 @@
       margin-top: 12px;
       font-size: .92rem;
       line-height: 1.6;
-      color: #dce8f8;
-    }
-
-    section { padding: 28px 0; }
-
-    .section-head { margin-bottom: 18px; }
-
-    .teams-grid {
-      display: grid;
-      grid-template-columns: repeat(6, minmax(0,1fr));
-      gap: 12px;
-    }
-
-    .team-chip {
-      padding: 16px 12px;
-      text-align: center;
-      border-radius: 18px;
-      background: var(--panel-2);
-      border: 1px solid var(--line);
-      color: #eef4fb;
-      font-weight: 700;
-      min-height: 126px;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      gap: 12px;
-    }
-
-    .team-logo {
-      width: 62px;
-      height: 62px;
-      object-fit: contain;
-      display: block;
-      filter: drop-shadow(0 4px 10px rgba(0,0,0,.18));
-    }
-
-    .team-code {
-      font-size: 1rem;
-      letter-spacing: .02em;
-    }
-
-    .steps {
-      display: grid;
-      grid-template-columns: repeat(3, minmax(0,1fr));
-      gap: 18px;
-    }
-
-    .step {
-      padding: 22px;
-      background: var(--panel-2);
-      border: 1px solid var(--line);
-      border-radius: 20px;
-    }
-
-    .step-number {
-      width: 42px;
-      height: 42px;
-      border-radius: 50%;
-      display: grid;
-      place-items: center;
-      background: rgba(243,154,43,.16);
-      color: #ffd39d;
-      font-weight: 800;
-      margin-bottom: 14px;
-    }
-
-    .step h3 {
-      margin: 0 0 8px;
-      font-size: 1.08rem;
-    }
-
-    .step p {
-      margin: 0;
       color: var(--muted);
-      line-height: 1.65;
     }
 
     .modal {
@@ -392,16 +323,18 @@
       align-items: center;
       justify-content: center;
       padding: 20px;
-      background: rgba(3,8,15,.72);
+      background: rgba(3,8,15,.45);
       z-index: 60;
     }
 
-    .modal.is-open { display: flex; }
+    .modal.is-open {
+      display: flex;
+    }
 
     .modal-card {
       width: min(100%, 680px);
-      background: linear-gradient(180deg, #102030, #0b1724);
-      border: 1px solid rgba(255,255,255,.1);
+      background: #ffffff;
+      border: 1px solid var(--line);
       border-radius: 24px;
       box-shadow: var(--shadow);
       padding: 24px;
@@ -418,14 +351,15 @@
     .modal-head h3 {
       margin: 0;
       font-size: 1.35rem;
+      color: var(--blue-dark);
     }
 
     .icon-btn {
       width: 40px;
       height: 40px;
       border-radius: 50%;
-      border: 1px solid rgba(255,255,255,.12);
-      background: rgba(255,255,255,.06);
+      border: 1px solid var(--line);
+      background: #f3f8fc;
       color: var(--text);
       cursor: pointer;
     }
@@ -439,10 +373,10 @@
       margin-top: 14px;
       padding: 14px;
       border-radius: 16px;
-      background: rgba(255,255,255,.06);
-      border: 1px solid rgba(255,255,255,.1);
+      background: #f7fbff;
+      border: 1px solid var(--line);
       word-break: break-all;
-      color: #eff6ff;
+      color: var(--text);
       font-size: .95rem;
     }
 
@@ -455,16 +389,13 @@
 
     @media (max-width: 1060px) {
       .hero-grid,
-      .form-grid,
-      .steps {
+      .form-grid {
         grid-template-columns: 1fr;
       }
-      .teams-grid { grid-template-columns: repeat(4, minmax(0,1fr)); }
     }
 
     @media (max-width: 680px) {
       .hero { padding-top: 48px; }
-      .teams-grid { grid-template-columns: repeat(2, minmax(0,1fr)); }
       .action-row { flex-direction: column; }
       .action-row .btn { width: 100%; }
     }
@@ -478,13 +409,14 @@
           <img src="assets/logo-copatalento.png" alt="Logo CopaTalento" onerror="this.style.display='none'; this.parentNode.textContent='⚽';" />
         </div>
         <div>
-          <div style="color: var(--nav-text);">CopaTalento 2026</div>
+          <div style="color: var(--white);">CopaTalento 2026</div>
           <span class="brand-subtitle">Calendarios por equipo y categoría</span>
         </div>
       </div>
+
       <nav class="nav-actions">
         <a class="btn btn-secondary" href="#seleccion">Seleccionar calendario</a>
-        <a class="btn btn-primary" href="#como-funciona">Cómo suscribirse</a>
+        <a class="btn btn-primary" href="#seleccion">Ir al selector</a>
       </nav>
     </div>
   </header>
@@ -534,43 +466,9 @@
               <button class="btn btn-secondary" id="outlookBtn" disabled>Outlook / Apple / iCal</button>
               <button class="btn btn-secondary" id="copyIcsBtn" disabled>Copiar enlace iCal</button>
             </div>
-            <div class="helper" id="helperText">Google Calendar agrega calendarios publicados desde <strong>Other calendars → From URL</strong>. Outlook permite suscribirse a calendarios iCal en línea.</div>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <section>
-      <div class="container">
-        <div class="section-head">
-          <h2>Equipos visibles en la clasificación</h2>
-          <p>Aquí puedes mostrar cada equipo con su logo. Solo debes guardar las imágenes y asignar la ruta correspondiente en el objeto <strong>TEAM_LOGOS</strong>.</p>
-        </div>
-        <div class="teams-grid" id="teamsGrid"></div>
-      </div>
-    </section>
-
-    <section id="como-funciona">
-      <div class="container">
-        <div class="section-head">
-          <h2>Cómo funciona la suscripción</h2>
-          <p>La página separa la experiencia por plataforma para evitar los errores de acceso que te daban los enlaces anteriores.</p>
-        </div>
-        <div class="steps">
-          <div class="step">
-            <div class="step-number">1</div>
-            <h3>Google Calendar</h3>
-            <p>El botón de Google abre la pantalla para agregar calendarios por URL y copia automáticamente el enlace iCal del calendario seleccionado.</p>
-          </div>
-          <div class="step">
-            <div class="step-number">2</div>
-            <h3>Outlook / Apple / iCal</h3>
-            <p>El botón secundario usa el enlace iCal del calendario. Outlook y otras apps compatibles pueden suscribirse a ese formato y recibir actualizaciones.</p>
-          </div>
-          <div class="step">
-            <div class="step-number">3</div>
-            <h3>Calendarios únicos por categoría</h3>
-            <p>Cada categoría tiene su propio bloque de enlaces. Cuando me pases los calendarios reales, se reemplazan uno por uno sin tocar el diseño.</p>
+            <div class="helper">
+              Google Calendar agrega calendarios publicados desde <strong>Other calendars → From URL</strong>. Outlook permite suscribirse a calendarios iCal en línea.
+            </div>
           </div>
         </div>
       </div>
@@ -605,154 +503,113 @@
   </footer>
 
   <script>
-    const DEFAULT_PUBLIC_URL = 'https://calendar.google.com/calendar/u/4?cid=Y29wYXRhbGVudG9jYWxlbmRhcmlvQGdtYWlsLmNvbQ';
-    const DEFAULT_ICAL_URL = 'https://calendar.google.com/calendar/ical/copatalentocalendario%40gmail.com/public/basic.ics';
-
-    // Logo principal del sitio:
-    // coloca tu archivo en assets/logo-copatalento.png
-    // También puedes cambiar esa ruta directamente en el <img> del header.
-
-    // Logos por equipo:
-    // Guarda las imágenes, por ejemplo, en assets/teams/
-    // y reemplaza cada valor por la ruta real de cada logo.
-    const TEAM_LOGOS = {
-      AHP: 'assets/teams/ahp.png',
-      AIP: 'assets/teams/aip.png',
-      BAL: 'assets/teams/bal.png',
-      BRA: 'assets/teams/bra.png',
-      CCP: 'assets/teams/ccp.png',
-      CEP: 'assets/teams/cep.png',
-      CJP: 'assets/teams/cjp.png',
-      CLS: 'assets/teams/cls.png',
-      CPM: 'assets/teams/cpm.png',
-      CRP: 'assets/teams/crp.png',
-      CSA: 'assets/teams/csa.png',
-      CSM: 'assets/teams/csm.png',
-      ECP: 'assets/teams/ecp.png',
-      IAE: 'assets/teams/iae.png',
-      IAP: 'assets/teams/iap.png',
-      ICP: 'assets/teams/icp.png',
-      IEF: 'assets/teams/ief.png',
-      IFN: 'assets/teams/ifn.png',
-      IJA: 'assets/teams/ija.png',
-      IPA: 'assets/teams/ipa.png',
-      IRU: 'assets/teams/iru.png',
-      JDM: 'assets/teams/jdm.png',
-      KCS: 'assets/teams/kcs.png',
-      MDA: 'assets/teams/mda.png',
-      MET: 'assets/teams/met.png',
-      OIS: 'assets/teams/ois.png',
-      PAS: 'assets/teams/pas.png',
-      SAP: 'assets/teams/sap.png',
-      TJS: 'assets/teams/tjs.png',
-      TOS: 'assets/teams/tos.png',
-      USP: 'assets/teams/usp.png'
-    };
-
     const TEAM_CALENDARS = {
       AIP: [
-        { name: 'U-8 Abierta', publicUrl: DEFAULT_PUBLIC_URL, icalUrl: DEFAULT_ICAL_URL },
-        { name: 'U-10 Masculino', publicUrl: DEFAULT_PUBLIC_URL, icalUrl: DEFAULT_ICAL_URL }
+        { name: 'U-8 Abierta', publicUrl: '', icalUrl: '' },
+        { name: 'U-10 Masculino', publicUrl: '', icalUrl: '' }
       ],
       AHP: [
-        { name: 'U-8 Abierta', publicUrl: DEFAULT_PUBLIC_URL, icalUrl: DEFAULT_ICAL_URL }
+        {
+          name: 'U-8 Abierta',
+          publicUrl: 'https://calendar.google.com/calendar/u/4?cid=ZjVhYzVjOTEyMDM4YzFiN2NiNmNkMDVhNWY4MmNmY2FkNDY0YWQxZDY2ZGY0NGNlMmI2OTMzMjliZjhhY2RjNUBncm91cC5jYWxlbmRhci5nb29nbGUuY29t',
+          icalUrl: 'https://calendar.google.com/calendar/ical/f5ac5c912038c1b7cb6cd05a5f82cfcad464ad1d66df44ce2b693329bf8acdc5%40group.calendar.google.com/public/basic.ics'
+        }
       ],
       BRA: [
-        { name: 'U-8 Abierta', publicUrl: DEFAULT_PUBLIC_URL, icalUrl: DEFAULT_ICAL_URL }
+        { name: 'U-8 Abierta', publicUrl: '', icalUrl: '' }
       ],
       CEP: [
-        { name: 'U-10 Masculino', publicUrl: DEFAULT_PUBLIC_URL, icalUrl: DEFAULT_ICAL_URL }
+        { name: 'U-10 Masculino', publicUrl: '', icalUrl: '' }
       ],
       CJP: [
-        { name: 'U-8 Abierta', publicUrl: DEFAULT_PUBLIC_URL, icalUrl: DEFAULT_ICAL_URL },
-        { name: 'U-10 Masculino', publicUrl: DEFAULT_PUBLIC_URL, icalUrl: DEFAULT_ICAL_URL }
+        { name: 'U-8 Abierta', publicUrl: '', icalUrl: '' },
+        { name: 'U-10 Masculino', publicUrl: '', icalUrl: '' }
       ],
       CLS: [
-        { name: 'U-8 Abierta', publicUrl: DEFAULT_PUBLIC_URL, icalUrl: DEFAULT_ICAL_URL },
-        { name: 'U-10 Masculino', publicUrl: DEFAULT_PUBLIC_URL, icalUrl: DEFAULT_ICAL_URL }
+        { name: 'U-8 Abierta', publicUrl: '', icalUrl: '' },
+        { name: 'U-10 Masculino', publicUrl: '', icalUrl: '' }
       ],
       CRP: [
-        { name: 'U-8 Abierta', publicUrl: DEFAULT_PUBLIC_URL, icalUrl: DEFAULT_ICAL_URL }
+        { name: 'U-8 Abierta', publicUrl: '', icalUrl: '' }
       ],
       CSA: [
-        { name: 'U-8 Abierta', publicUrl: DEFAULT_PUBLIC_URL, icalUrl: DEFAULT_ICAL_URL },
-        { name: 'U-10 Masculino', publicUrl: DEFAULT_PUBLIC_URL, icalUrl: DEFAULT_ICAL_URL }
+        { name: 'U-8 Abierta', publicUrl: '', icalUrl: '' },
+        { name: 'U-10 Masculino', publicUrl: '', icalUrl: '' }
       ],
       CSM: [
-        { name: 'U-10 Masculino', publicUrl: DEFAULT_PUBLIC_URL, icalUrl: DEFAULT_ICAL_URL }
+        { name: 'U-10 Masculino', publicUrl: '', icalUrl: '' }
       ],
       ECP: [
-        { name: 'U-8 Abierta', publicUrl: DEFAULT_PUBLIC_URL, icalUrl: DEFAULT_ICAL_URL },
-        { name: 'U-10 Masculino', publicUrl: DEFAULT_PUBLIC_URL, icalUrl: DEFAULT_ICAL_URL }
+        { name: 'U-8 Abierta', publicUrl: '', icalUrl: '' },
+        { name: 'U-10 Masculino', publicUrl: '', icalUrl: '' }
       ],
       IAP: [
-        { name: 'General', publicUrl: DEFAULT_PUBLIC_URL, icalUrl: DEFAULT_ICAL_URL }
+        { name: 'General', publicUrl: '', icalUrl: '' }
       ],
       IAE: [
-        { name: 'General', publicUrl: DEFAULT_PUBLIC_URL, icalUrl: DEFAULT_ICAL_URL }
+        { name: 'General', publicUrl: '', icalUrl: '' }
       ],
       ICP: [
-        { name: 'General', publicUrl: DEFAULT_PUBLIC_URL, icalUrl: DEFAULT_ICAL_URL }
+        { name: 'General', publicUrl: '', icalUrl: '' }
       ],
       IEF: [
-        { name: 'General', publicUrl: DEFAULT_PUBLIC_URL, icalUrl: DEFAULT_ICAL_URL }
+        { name: 'General', publicUrl: '', icalUrl: '' }
       ],
       IFN: [
-        { name: 'General', publicUrl: DEFAULT_PUBLIC_URL, icalUrl: DEFAULT_ICAL_URL }
+        { name: 'General', publicUrl: '', icalUrl: '' }
       ],
       IJA: [
-        { name: 'U-8 Abierta', publicUrl: DEFAULT_PUBLIC_URL, icalUrl: DEFAULT_ICAL_URL }
+        { name: 'U-8 Abierta', publicUrl: '', icalUrl: '' }
       ],
       IPA: [
-        { name: 'U-8 Abierta', publicUrl: DEFAULT_PUBLIC_URL, icalUrl: DEFAULT_ICAL_URL }
+        { name: 'U-8 Abierta', publicUrl: '', icalUrl: '' }
       ],
       IRU: [
-        { name: 'General', publicUrl: DEFAULT_PUBLIC_URL, icalUrl: DEFAULT_ICAL_URL }
+        { name: 'General', publicUrl: '', icalUrl: '' }
       ],
       JDM: [
-        { name: 'General', publicUrl: DEFAULT_PUBLIC_URL, icalUrl: DEFAULT_ICAL_URL }
+        { name: 'General', publicUrl: '', icalUrl: '' }
       ],
       KCS: [
-        { name: 'General', publicUrl: DEFAULT_PUBLIC_URL, icalUrl: DEFAULT_ICAL_URL }
+        { name: 'General', publicUrl: '', icalUrl: '' }
       ],
       MDA: [
-        { name: 'U-10 Masculino', publicUrl: DEFAULT_PUBLIC_URL, icalUrl: DEFAULT_ICAL_URL }
+        { name: 'U-10 Masculino', publicUrl: '', icalUrl: '' }
       ],
       MET: [
-        { name: 'U-8 Abierta', publicUrl: DEFAULT_PUBLIC_URL, icalUrl: DEFAULT_ICAL_URL }
+        { name: 'U-8 Abierta', publicUrl: '', icalUrl: '' }
       ],
       OIS: [
-        { name: 'General', publicUrl: DEFAULT_PUBLIC_URL, icalUrl: DEFAULT_ICAL_URL }
+        { name: 'General', publicUrl: '', icalUrl: '' }
       ],
       PAS: [
-        { name: 'General', publicUrl: DEFAULT_PUBLIC_URL, icalUrl: DEFAULT_ICAL_URL }
+        { name: 'General', publicUrl: '', icalUrl: '' }
       ],
       SAP: [
-        { name: 'General', publicUrl: DEFAULT_PUBLIC_URL, icalUrl: DEFAULT_ICAL_URL }
+        { name: 'General', publicUrl: '', icalUrl: '' }
       ],
       TJS: [
-        { name: 'General', publicUrl: DEFAULT_PUBLIC_URL, icalUrl: DEFAULT_ICAL_URL }
+        { name: 'General', publicUrl: '', icalUrl: '' }
       ],
       TOS: [
-        { name: 'General', publicUrl: DEFAULT_PUBLIC_URL, icalUrl: DEFAULT_ICAL_URL }
+        { name: 'General', publicUrl: '', icalUrl: '' }
       ],
       USP: [
-        { name: 'U-10 Masculino', publicUrl: DEFAULT_PUBLIC_URL, icalUrl: DEFAULT_ICAL_URL }
+        { name: 'U-10 Masculino', publicUrl: '', icalUrl: '' }
       ],
       BAL: [
-        { name: 'General', publicUrl: DEFAULT_PUBLIC_URL, icalUrl: DEFAULT_ICAL_URL }
+        { name: 'General', publicUrl: '', icalUrl: '' }
       ],
       CCP: [
-        { name: 'General', publicUrl: DEFAULT_PUBLIC_URL, icalUrl: DEFAULT_ICAL_URL }
+        { name: 'General', publicUrl: '', icalUrl: '' }
       ],
       CPM: [
-        { name: 'General', publicUrl: DEFAULT_PUBLIC_URL, icalUrl: DEFAULT_ICAL_URL }
+        { name: 'General', publicUrl: '', icalUrl: '' }
       ]
     };
 
     const teamSelect = document.getElementById('teamSelect');
     const categorySelect = document.getElementById('categorySelect');
-    const teamsGrid = document.getElementById('teamsGrid');
     const selectionResult = document.getElementById('selectionResult');
     const googleModal = document.getElementById('googleModal');
     const closeModalBtn = document.getElementById('closeModalBtn');
@@ -767,23 +624,14 @@
 
     function renderTeams() {
       const teams = getTeams();
-
-      teamSelect.innerHTML = '<option value="">Selecciona un equipo</option>' +
+      teamSelect.innerHTML =
+        '<option value="">Selecciona un equipo</option>' +
         teams.map(team => `<option value="${team}">${team}</option>`).join('');
-
-      teamsGrid.innerHTML = teams.map(team => {
-        const logo = TEAM_LOGOS[team];
-        return `
-          <div class="team-chip">
-            ${logo ? `<img class="team-logo" src="${logo}" alt="Logo ${team}" onerror="this.remove();" />` : ''}
-            <span class="team-code">${team}</span>
-          </div>
-        `;
-      }).join('');
     }
 
     function populateCategories(team) {
       const categories = TEAM_CALENDARS[team] || [];
+
       if (!team || categories.length === 0) {
         categorySelect.disabled = true;
         categorySelect.innerHTML = '<option value="">Primero selecciona un equipo</option>';
@@ -791,20 +639,50 @@
       }
 
       categorySelect.disabled = false;
-      categorySelect.innerHTML = '<option value="">Selecciona una categoría</option>' +
+      categorySelect.innerHTML =
+        '<option value="">Selecciona una categoría</option>' +
         categories.map((category, index) => `<option value="${index}">${category.name}</option>`).join('');
     }
 
     function updateSelectionView(team, category) {
-      const pills = `<div class="pill-row"><span class="pill">Equipo: ${team || '—'}</span><span class="pill">Categoría: ${category?.name || '—'}</span></div>`;
+      const pills = `
+        <div class="pill-row">
+          <span class="pill">Equipo: ${team || '—'}</span>
+          <span class="pill">Categoría: ${category?.name || '—'}</span>
+        </div>
+      `;
 
       if (!team || !category) {
-        selectionResult.innerHTML = `${pills}<h3 class="selection-title">Todavía no has seleccionado un calendario</h3><p class="selection-copy">Cuando elijas una categoría, aquí aparecerán los botones para abrir el calendario y suscribirte según tu plataforma.</p><div class="action-row"><button class="btn btn-primary" id="googleBtn" disabled>Google Calendar</button><button class="btn btn-secondary" id="outlookBtn" disabled>Outlook / Apple / iCal</button><button class="btn btn-secondary" id="copyIcsBtn" disabled>Copiar enlace iCal</button></div><div class="helper" id="helperText">Google Calendar agrega calendarios publicados desde <strong>Other calendars → From URL</strong>. Outlook permite suscribirse a calendarios iCal en línea.</div>`;
+        selectionResult.innerHTML = `
+          ${pills}
+          <h3 class="selection-title">Todavía no has seleccionado un calendario</h3>
+          <p class="selection-copy">Cuando elijas una categoría, aquí aparecerán los botones para abrir el calendario y suscribirte según tu plataforma.</p>
+          <div class="action-row">
+            <button class="btn btn-primary" id="googleBtn" disabled>Google Calendar</button>
+            <button class="btn btn-secondary" id="outlookBtn" disabled>Outlook / Apple / iCal</button>
+            <button class="btn btn-secondary" id="copyIcsBtn" disabled>Copiar enlace iCal</button>
+          </div>
+          <div class="helper">Google Calendar agrega calendarios publicados desde <strong>Other calendars → From URL</strong>. Outlook permite suscribirse a calendarios iCal en línea.</div>
+        `;
         reconnectDynamicButtons();
         return;
       }
 
-      selectionResult.innerHTML = `${pills}<h3 class="selection-title">${team} · ${category.name}</h3><p class="selection-copy">Este bloque se conectará al calendario único de esta categoría. Ahora mismo está enlazado a la URL configurada para <strong>${team} / ${category.name}</strong>.</p><div class="action-row"><button class="btn btn-primary" id="googleBtn">Google Calendar</button><button class="btn btn-secondary" id="outlookBtn">Outlook / Apple / iCal</button><button class="btn btn-secondary" id="copyIcsBtn">Copiar enlace iCal</button></div><div class="helper" id="helperText">Google no ofrece un enlace público universal de un clic para suscribirse a cualquier calendario publicado; por eso este botón copia el enlace iCal y te lleva a la pantalla <strong>From URL</strong>.</div>`;
+      selectionResult.innerHTML = `
+        ${pills}
+        <h3 class="selection-title">${team} · ${category.name}</h3>
+        <p class="selection-copy">Este bloque se conectará al calendario único de esta categoría. Ahora mismo está enlazado a la URL configurada para <strong>${team} / ${category.name}</strong>.</p>
+        <div class="action-row">
+          <button class="btn btn-primary" id="googleBtn" ${category.publicUrl ? '' : 'disabled'}>Google Calendar</button>
+          <button class="btn btn-secondary" id="outlookBtn" ${category.icalUrl ? '' : 'disabled'}>Outlook / Apple / iCal</button>
+          <button class="btn btn-secondary" id="copyIcsBtn" ${category.icalUrl ? '' : 'disabled'}>Copiar enlace iCal</button>
+        </div>
+        <div class="helper">
+          ${category.icalUrl
+            ? 'Google no ofrece un enlace público universal de un clic para suscribirse a cualquier calendario publicado; por eso este botón copia el enlace iCal y te lleva a la pantalla <strong>From URL</strong>.'
+            : 'Este calendario ya tiene enlace público para abrirlo. Cuando agregues el enlace iCal también se habilitarán Outlook y Copiar enlace iCal.'}
+        </div>
+      `;
       reconnectDynamicButtons();
     }
 
@@ -840,12 +718,9 @@
     }
 
     function handleGoogleSubscribe() {
-      if (!selectedCalendar?.icalUrl) return;
-      const normalizedIcalUrl = normalizeCalendarUrl(selectedCalendar.icalUrl);
-      modalUrlBox.textContent = normalizedIcalUrl;
-      copyText(normalizedIcalUrl);
-      googleModal.classList.add('is-open');
-      googleModal.setAttribute('aria-hidden', 'false');
+      if (!selectedCalendar?.publicUrl) return;
+      const normalizedPublicUrl = normalizeCalendarUrl(selectedCalendar.publicUrl);
+      window.open(normalizedPublicUrl, '_blank', 'noopener,noreferrer');
     }
 
     function handleOutlookSubscribe() {
@@ -883,6 +758,7 @@
     });
 
     closeModalBtn.addEventListener('click', closeModal);
+
     googleModal.addEventListener('click', (event) => {
       if (event.target === googleModal) closeModal();
     });
@@ -897,12 +773,16 @@
     renderTeams();
     reconnectDynamicButtons();
 
-    // Pruebas básicas en tiempo de ejecución para evitar errores silenciosos.
     console.assert(Array.isArray(TEAM_CALENDARS.AIP), 'AIP debe tener un arreglo de categorías.');
-    console.assert(typeof TEAM_LOGOS.AIP === 'string', 'AIP debe tener una ruta de logo.');
     console.assert(getTeams().includes('CSA'), 'CSA debe existir en la lista de equipos.');
-    console.assert(normalizeCalendarUrl('//calendar.google.com/test.ics') === 'https://calendar.google.com/test.ics', 'Debe completar URLs que comienzan con //');
-    console.assert(normalizeCalendarUrl('calendar.google.com/test.ics') === 'https://calendar.google.com/test.ics', 'Debe completar URLs sin protocolo.');
+    console.assert(
+      normalizeCalendarUrl('//calendar.google.com/test.ics') === 'https://calendar.google.com/test.ics',
+      'Debe completar URLs que comienzan con //'
+    );
+    console.assert(
+      normalizeCalendarUrl('calendar.google.com/test.ics') === 'https://calendar.google.com/test.ics',
+      'Debe completar URLs sin protocolo.'
+    );
   </script>
 </body>
 </html>
