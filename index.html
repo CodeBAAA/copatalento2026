@@ -503,286 +503,302 @@
   </footer>
 
   <script>
-    const TEAM_CALENDARS = {
-      AIP: [
-        { name: 'U-8 Abierta', publicUrl: 'https://calendar.google.com/calendar/u/4?cid=ZTRkNjc5OTljOWMzYTU2NWQ4OTAwODYxZWE5YmM1ZDE0Zjk2MjIzNzI2ZGQ3ODU4NzY4YzI0ZGIxYzkwMTg1OEBncm91cC5jYWxlbmRhci5nb29nbGUuY29t', icalUrl: 'https://calendar.google.com/calendar/ical/e4d67999c9c3a565d8900861ea9bc5d14f96223726dd7858768c24db1c901858%40group.calendar.google.com/public/basic.ics' },
-        { name: 'U-10 Masculino', publicUrl: '', icalUrl: '' }
-      ],
-      AHP: [
-        {
-          name: 'U-8 Abierta',
-          publicUrl: 'https://calendar.google.com/calendar/u/4?cid=ZjVhYzVjOTEyMDM4YzFiN2NiNmNkMDVhNWY4MmNmY2FkNDY0YWQxZDY2ZGY0NGNlMmI2OTMzMjliZjhhY2RjNUBncm91cC5jYWxlbmRhci5nb29nbGUuY29t',
-          icalUrl: 'https://calendar.google.com/calendar/ical/f5ac5c912038c1b7cb6cd05a5f82cfcad464ad1d66df44ce2b693329bf8acdc5%40group.calendar.google.com/public/basic.ics'
-        }
-      ],
-      BRA: [
-        { name: 'U-8 Abierta', publicUrl: '', icalUrl: '' }
-      ],
-      CEP: [
-        { name: 'U-10 Masculino', publicUrl: '', icalUrl: '' }
-      ],
-      CJP: [
-        { name: 'U-8 Abierta', publicUrl: '', icalUrl: '' },
-        { name: 'U-10 Masculino', publicUrl: '', icalUrl: '' }
-      ],
-      CLS: [
-        { name: 'U-8 Abierta', publicUrl: '', icalUrl: '' },
-        { name: 'U-10 Masculino', publicUrl: '', icalUrl: '' }
-      ],
-      CRP: [
-        { name: 'U-8 Abierta', publicUrl: '', icalUrl: '' }
-      ],
-      CSA: [
-        { name: 'U-8 Abierta', publicUrl: '', icalUrl: '' },
-        { name: 'U-10 Masculino', publicUrl: '', icalUrl: '' }
-      ],
-      CSM: [
-        { name: 'U-10 Masculino', publicUrl: '', icalUrl: '' }
-      ],
-      ECP: [
-        { name: 'U-8 Abierta', publicUrl: '', icalUrl: '' },
-        { name: 'U-10 Masculino', publicUrl: '', icalUrl: '' }
-      ],
-      IAP: [
-        { name: 'General', publicUrl: '', icalUrl: '' }
-      ],
-      IAE: [
-        { name: 'General', publicUrl: '', icalUrl: '' }
-      ],
-      ICP: [
-        { name: 'General', publicUrl: '', icalUrl: '' }
-      ],
-      IEF: [
-        { name: 'General', publicUrl: '', icalUrl: '' }
-      ],
-      IFN: [
-        { name: 'General', publicUrl: '', icalUrl: '' }
-      ],
-      IJA: [
-        { name: 'U-8 Abierta', publicUrl: '', icalUrl: '' }
-      ],
-      IPA: [
-        { name: 'U-8 Abierta', publicUrl: '', icalUrl: '' }
-      ],
-      IRU: [
-        { name: 'General', publicUrl: '', icalUrl: '' }
-      ],
-      JDM: [
-        { name: 'General', publicUrl: '', icalUrl: '' }
-      ],
-      KCS: [
-        { name: 'General', publicUrl: '', icalUrl: '' }
-      ],
-      MDA: [
-        { name: 'U-10 Masculino', publicUrl: '', icalUrl: '' }
-      ],
-      MET: [
-        { name: 'U-8 Abierta', publicUrl: '', icalUrl: '' }
-      ],
-      OIS: [
-        { name: 'General', publicUrl: '', icalUrl: '' }
-      ],
-      PAS: [
-        { name: 'General', publicUrl: '', icalUrl: '' }
-      ],
-      SAP: [
-        { name: 'General', publicUrl: '', icalUrl: '' }
-      ],
-      TJS: [
-        { name: 'General', publicUrl: '', icalUrl: '' }
-      ],
-      TOS: [
-        { name: 'General', publicUrl: '', icalUrl: '' }
-      ],
-      USP: [
-        { name: 'U-10 Masculino', publicUrl: '', icalUrl: '' }
-      ],
-      BAL: [
-        { name: 'General', publicUrl: '', icalUrl: '' }
-      ],
-      CCP: [
-        { name: 'General', publicUrl: '', icalUrl: '' }
-      ],
-      CPM: [
-        { name: 'General', publicUrl: '', icalUrl: '' }
-      ]
-    };
-
-    const teamSelect = document.getElementById('teamSelect');
-    const categorySelect = document.getElementById('categorySelect');
-    const selectionResult = document.getElementById('selectionResult');
-    const googleModal = document.getElementById('googleModal');
-    const closeModalBtn = document.getElementById('closeModalBtn');
-    const modalUrlBox = document.getElementById('modalUrlBox');
-    const modalCopyBtn = document.getElementById('modalCopyBtn');
-
-    let selectedCalendar = null;
-
-    function getTeams() {
-      return Object.keys(TEAM_CALENDARS).sort((a, b) => a.localeCompare(b));
-    }
-
-    function renderTeams() {
-      const teams = getTeams();
-      teamSelect.innerHTML =
-        '<option value="">Selecciona un equipo</option>' +
-        teams.map(team => `<option value="${team}">${team}</option>`).join('');
-    }
-
-    function populateCategories(team) {
-      const categories = TEAM_CALENDARS[team] || [];
-
-      if (!team || categories.length === 0) {
-        categorySelect.disabled = true;
-        categorySelect.innerHTML = '<option value="">Primero selecciona un equipo</option>';
-        return;
+  const TEAM_CALENDARS = {
+    AIP: [
+      {
+        name: 'U-8 Abierta',
+        publicUrl: 'https://calendar.google.com/calendar/u/4?cid=ZTRkNjc5OTljOWMzYTU2NWQ4OTAwODYxZWE5YmM1ZDE0Zjk2MjIzNzI2ZGQ3ODU4NzY4YzI0ZGIxYzkwMTg1OEBncm91cC5jYWxlbmRhci5nb29nbGUuY29t',
+        icalUrl: 'https://calendar.google.com/calendar/ical/e4d67999c9c3a565d8900861ea9bc5d14f96223726dd7858768c24db1c901858%40group.calendar.google.com/public/basic.ics'
+      },
+      { name: 'U-10 Masculino', publicUrl: '', icalUrl: '' }
+    ],
+    AHP: [
+      {
+        name: 'U-8 Abierta',
+        publicUrl: 'https://calendar.google.com/calendar/u/4?cid=ZjVhYzVjOTEyMDM4YzFiN2NiNmNkMDVhNWY4MmNmY2FkNDY0YWQxZDY2ZGY0NGNlMmI2OTMzMjliZjhhY2RjNUBncm91cC5jYWxlbmRhci5nb29nbGUuY29t',
+        icalUrl: 'https://calendar.google.com/calendar/ical/f5ac5c912038c1b7cb6cd05a5f82cfcad464ad1d66df44ce2b693329bf8acdc5%40group.calendar.google.com/public/basic.ics'
       }
+    ],
+    BRA: [
+      { name: 'U-8 Abierta', publicUrl: '', icalUrl: '' }
+    ],
+    CEP: [
+      { name: 'U-10 Masculino', publicUrl: '', icalUrl: '' }
+    ],
+    CJP: [
+      { name: 'U-8 Abierta', publicUrl: '', icalUrl: '' },
+      { name: 'U-10 Masculino', publicUrl: '', icalUrl: '' }
+    ],
+    CLS: [
+      { name: 'U-8 Abierta', publicUrl: '', icalUrl: '' },
+      { name: 'U-10 Masculino', publicUrl: '', icalUrl: '' }
+    ],
+    CRP: [
+      { name: 'U-8 Abierta', publicUrl: '', icalUrl: '' }
+    ],
+    CSA: [
+      { name: 'U-8 Abierta', publicUrl: '', icalUrl: '' },
+      { name: 'U-10 Masculino', publicUrl: '', icalUrl: '' }
+    ],
+    CSM: [
+      { name: 'U-10 Masculino', publicUrl: '', icalUrl: '' }
+    ],
+    ECP: [
+      { name: 'U-8 Abierta', publicUrl: '', icalUrl: '' },
+      { name: 'U-10 Masculino', publicUrl: '', icalUrl: '' }
+    ],
+    IAP: [
+      { name: 'General', publicUrl: '', icalUrl: '' }
+    ],
+    IAE: [
+      { name: 'General', publicUrl: '', icalUrl: '' }
+    ],
+    ICP: [
+      { name: 'General', publicUrl: '', icalUrl: '' }
+    ],
+    IEF: [
+      { name: 'General', publicUrl: '', icalUrl: '' }
+    ],
+    IFN: [
+      { name: 'General', publicUrl: '', icalUrl: '' }
+    ],
+    IJA: [
+      { name: 'U-8 Abierta', publicUrl: '', icalUrl: '' }
+    ],
+    IPA: [
+      { name: 'U-8 Abierta', publicUrl: '', icalUrl: '' }
+    ],
+    IRU: [
+      { name: 'General', publicUrl: '', icalUrl: '' }
+    ],
+    JDM: [
+      { name: 'General', publicUrl: '', icalUrl: '' }
+    ],
+    KCS: [
+      { name: 'General', publicUrl: '', icalUrl: '' }
+    ],
+    MDA: [
+      { name: 'U-10 Masculino', publicUrl: '', icalUrl: '' }
+    ],
+    MET: [
+      { name: 'U-8 Abierta', publicUrl: '', icalUrl: '' }
+    ],
+    OIS: [
+      { name: 'General', publicUrl: '', icalUrl: '' }
+    ],
+    PAS: [
+      { name: 'General', publicUrl: '', icalUrl: '' }
+    ],
+    SAP: [
+      { name: 'General', publicUrl: '', icalUrl: '' }
+    ],
+    TJS: [
+      { name: 'General', publicUrl: '', icalUrl: '' }
+    ],
+    TOS: [
+      { name: 'General', publicUrl: '', icalUrl: '' }
+    ],
+    USP: [
+      { name: 'U-10 Masculino', publicUrl: '', icalUrl: '' }
+    ],
+    BAL: [
+      { name: 'General', publicUrl: '', icalUrl: '' }
+    ],
+    CCP: [
+      { name: 'General', publicUrl: '', icalUrl: '' }
+    ],
+    CPM: [
+      { name: 'General', publicUrl: '', icalUrl: '' }
+    ]
+  };
 
-      categorySelect.disabled = false;
-      categorySelect.innerHTML =
-        '<option value="">Selecciona una categoría</option>' +
-        categories.map((category, index) => `<option value="${index}">${category.name}</option>`).join('');
+  const teamSelect = document.getElementById('teamSelect');
+  const categorySelect = document.getElementById('categorySelect');
+  const selectionResult = document.getElementById('selectionResult');
+  const googleModal = document.getElementById('googleModal');
+  const closeModalBtn = document.getElementById('closeModalBtn');
+  const modalUrlBox = document.getElementById('modalUrlBox');
+  const modalCopyBtn = document.getElementById('modalCopyBtn');
+
+  let selectedCalendar = null;
+
+  function getTeams() {
+    return Object.keys(TEAM_CALENDARS).sort((a, b) => a.localeCompare(b));
+  }
+
+  function renderTeams() {
+    const teams = getTeams();
+    teamSelect.innerHTML =
+      '<option value="">Selecciona un equipo</option>' +
+      teams.map(team => `<option value="${team}">${team}</option>`).join('');
+  }
+
+  function populateCategories(team) {
+    const categories = TEAM_CALENDARS[team] || [];
+
+    if (!team || categories.length === 0) {
+      categorySelect.disabled = true;
+      categorySelect.innerHTML = '<option value="">Primero selecciona un equipo</option>';
+      return;
     }
 
-    function updateSelectionView(team, category) {
-      const pills = `
-        <div class="pill-row">
-          <span class="pill">Equipo: ${team || '—'}</span>
-          <span class="pill">Categoría: ${category?.name || '—'}</span>
-        </div>
-      `;
+    categorySelect.disabled = false;
+    categorySelect.innerHTML =
+      '<option value="">Selecciona una categoría</option>' +
+      categories.map((category, index) => `<option value="${index}">${category.name}</option>`).join('');
+  }
 
-      if (!team || !category) {
-        selectionResult.innerHTML = `
-          ${pills}
-          <h3 class="selection-title">Todavía no has seleccionado un calendario</h3>
-          <p class="selection-copy">Cuando elijas una categoría, aquí aparecerán los botones para abrir el calendario y suscribirte según tu plataforma.</p>
-          <div class="action-row">
-            <button class="btn btn-primary" id="googleBtn" disabled>Google Calendar</button>
-            <button class="btn btn-secondary" id="outlookBtn" disabled>Outlook / Apple / iCal</button>
-            <button class="btn btn-secondary" id="copyIcsBtn" disabled>Copiar enlace iCal</button>
-          </div>
-          <div class="helper">Google Calendar agrega calendarios publicados desde <strong>Other calendars → From URL</strong>. Outlook permite suscribirse a calendarios iCal en línea.</div>
-        `;
-        reconnectDynamicButtons();
-        return;
-      }
+  function updateSelectionView(team, category) {
+    const pills = `
+      <div class="pill-row">
+        <span class="pill">Equipo: ${team || '—'}</span>
+        <span class="pill">Categoría: ${category?.name || '—'}</span>
+      </div>
+    `;
 
+    if (!team || !category) {
       selectionResult.innerHTML = `
         ${pills}
-        <h3 class="selection-title">${team} · ${category.name}</h3>
-        <p class="selection-copy">Este bloque se conectará al calendario único de esta categoría. Ahora mismo está enlazado a la URL configurada para <strong>${team} / ${category.name}</strong>.</p>
+        <h3 class="selection-title">Todavía no has seleccionado un calendario</h3>
+        <p class="selection-copy">Cuando elijas una categoría, aquí aparecerán los botones para abrir el calendario y suscribirte según tu plataforma.</p>
         <div class="action-row">
-          <button class="btn btn-primary" id="googleBtn" ${category.publicUrl ? '' : 'disabled'}>Google Calendar</button>
-          <button class="btn btn-secondary" id="outlookBtn" ${category.icalUrl ? '' : 'disabled'}>Outlook / Apple / iCal</button>
-          <button class="btn btn-secondary" id="copyIcsBtn" ${category.icalUrl ? '' : 'disabled'}>Copiar enlace iCal</button>
+          <button class="btn btn-primary" id="googleBtn" disabled>Google Calendar</button>
+          <button class="btn btn-secondary" id="outlookBtn" disabled>Outlook / Apple / iCal</button>
+          <button class="btn btn-secondary" id="copyIcsBtn" disabled>Copiar enlace iCal</button>
         </div>
-        <div class="helper">
-          ${category.icalUrl
-            ? 'Google no ofrece un enlace público universal de un clic para suscribirse a cualquier calendario publicado; por eso este botón copia el enlace iCal y te lleva a la pantalla <strong>From URL</strong>.'
-            : 'Este calendario ya tiene enlace público para abrirlo. Cuando agregues el enlace iCal también se habilitarán Outlook y Copiar enlace iCal.'}
-        </div>
+        <div class="helper">Google Calendar agrega calendarios publicados desde <strong>Other calendars → From URL</strong>. Outlook permite suscribirse a calendarios iCal en línea.</div>
       `;
       reconnectDynamicButtons();
+      return;
     }
 
-    function reconnectDynamicButtons() {
-      const googleBtn = document.getElementById('googleBtn');
-      const outlookBtn = document.getElementById('outlookBtn');
-      const copyIcsBtn = document.getElementById('copyIcsBtn');
-
-      if (googleBtn) googleBtn.addEventListener('click', handleGoogleSubscribe);
-      if (outlookBtn) outlookBtn.addEventListener('click', handleOutlookSubscribe);
-      if (copyIcsBtn) copyIcsBtn.addEventListener('click', handleCopyIcs);
-    }
-
-    function normalizeCalendarUrl(value) {
-      if (!value) return '';
-      if (value.startsWith('https://') || value.startsWith('http://') || value.startsWith('webcal://')) {
-        return value;
-      }
-      if (value.startsWith('//')) {
-        return `https:${value}`;
-      }
-      return `https://${value.replace(/^\/+/, '')}`;
-    }
-
-    async function copyText(value) {
-      const normalized = normalizeCalendarUrl(value);
-      if (!normalized) return;
-      try {
-        await navigator.clipboard.writeText(normalized);
-      } catch (error) {
-        console.warn('No se pudo copiar al portapapeles', error);
-      }
-    }
-
-    function handleGoogleSubscribe() {
-      if (!selectedCalendar?.publicUrl) return;
-      const normalizedPublicUrl = normalizeCalendarUrl(selectedCalendar.publicUrl);
-      window.open(normalizedPublicUrl, '_blank', 'noopener,noreferrer');
-    }
-
-    function handleOutlookSubscribe() {
-      if (!selectedCalendar?.icalUrl) return;
-      const normalizedIcalUrl = normalizeCalendarUrl(selectedCalendar.icalUrl);
-      const outlookFriendlyUrl = normalizedIcalUrl.replace(/^https:/i, 'webcal:');
-      window.open(outlookFriendlyUrl, '_blank', 'noopener,noreferrer');
-    }
-
-    function handleCopyIcs() {
-      if (!selectedCalendar?.icalUrl) return;
-      const normalizedIcalUrl = normalizeCalendarUrl(selectedCalendar.icalUrl);
-      copyText(normalizedIcalUrl);
-      alert('Enlace iCal copiado al portapapeles.');
-    }
-
-    function closeModal() {
-      googleModal.classList.remove('is-open');
-      googleModal.setAttribute('aria-hidden', 'true');
-    }
-
-    teamSelect.addEventListener('change', () => {
-      const team = teamSelect.value;
-      selectedCalendar = null;
-      populateCategories(team);
-      updateSelectionView(team, null);
-    });
-
-    categorySelect.addEventListener('change', () => {
-      const team = teamSelect.value;
-      const categories = TEAM_CALENDARS[team] || [];
-      const category = categories[Number(categorySelect.value)] || null;
-      selectedCalendar = category;
-      updateSelectionView(team, category);
-    });
-
-    closeModalBtn.addEventListener('click', closeModal);
-
-    googleModal.addEventListener('click', (event) => {
-      if (event.target === googleModal) closeModal();
-    });
-
-    modalCopyBtn.addEventListener('click', () => {
-      if (!selectedCalendar?.icalUrl) return;
-      const normalizedIcalUrl = normalizeCalendarUrl(selectedCalendar.icalUrl);
-      copyText(normalizedIcalUrl);
-      alert('Enlace iCal copiado otra vez.');
-    });
-
-    renderTeams();
+    selectionResult.innerHTML = `
+      ${pills}
+      <h3 class="selection-title">${team} · ${category.name}</h3>
+      <p class="selection-copy">Este bloque se conectará al calendario único de esta categoría. Ahora mismo está enlazado a la URL configurada para <strong>${team} / ${category.name}</strong>.</p>
+      <div class="action-row">
+        <button class="btn btn-primary" id="googleBtn" ${category.publicUrl ? '' : 'disabled'}>Google Calendar</button>
+        <button class="btn btn-secondary" id="outlookBtn" ${category.icalUrl ? '' : 'disabled'}>Outlook / Apple / iCal</button>
+        <button class="btn btn-secondary" id="copyIcsBtn" ${category.icalUrl ? '' : 'disabled'}>Copiar enlace iCal</button>
+      </div>
+      <div class="helper">
+        ${category.icalUrl
+          ? 'Google no ofrece un enlace público universal de un clic para suscribirse a cualquier calendario publicado; por eso este botón copia el enlace iCal y te lleva a la pantalla <strong>From URL</strong>.'
+          : 'Este calendario ya tiene enlace público para abrirlo. Cuando agregues el enlace iCal también se habilitarán Outlook y Copiar enlace iCal.'}
+      </div>
+    `;
     reconnectDynamicButtons();
+  }
 
-    console.assert(Array.isArray(TEAM_CALENDARS.AIP), 'AIP debe tener un arreglo de categorías.');
-    console.assert(getTeams().includes('CSA'), 'CSA debe existir en la lista de equipos.');
-    console.assert(
-      normalizeCalendarUrl('//calendar.google.com/test.ics') === 'https://calendar.google.com/test.ics',
-      'Debe completar URLs que comienzan con //'
-    );
-    console.assert(
-      normalizeCalendarUrl('calendar.google.com/test.ics') === 'https://calendar.google.com/test.ics',
-      'Debe completar URLs sin protocolo.'
-    );
-  </script>
-</body>
-</html>
+  function reconnectDynamicButtons() {
+    const googleBtn = document.getElementById('googleBtn');
+    const outlookBtn = document.getElementById('outlookBtn');
+    const copyIcsBtn = document.getElementById('copyIcsBtn');
+
+    if (googleBtn) googleBtn.addEventListener('click', handleGoogleSubscribe);
+    if (outlookBtn) outlookBtn.addEventListener('click', handleOutlookSubscribe);
+    if (copyIcsBtn) copyIcsBtn.addEventListener('click', handleCopyIcs);
+  }
+
+  function normalizeCalendarUrl(value) {
+    if (!value) return '';
+    if (value.startsWith('https://') || value.startsWith('http://') || value.startsWith('webcal://')) {
+      return value;
+    }
+    if (value.startsWith('//')) {
+      return `https:${value}`;
+    }
+    return `https://${value.replace(/^\/+/, '')}`;
+  }
+
+  async function copyText(value) {
+    const normalized = normalizeCalendarUrl(value);
+    if (!normalized) return;
+    try {
+      await navigator.clipboard.writeText(normalized);
+    } catch (error) {
+      console.warn('No se pudo copiar al portapapeles', error);
+    }
+  }
+
+  function handleGoogleSubscribe() {
+    if (!selectedCalendar?.publicUrl) return;
+    const normalizedPublicUrl = normalizeCalendarUrl(selectedCalendar.publicUrl);
+    window.open(normalizedPublicUrl, '_blank', 'noopener,noreferrer');
+  }
+
+function handleOutlookSubscribe() {
+  if (!selectedCalendar?.icalUrl) return;
+
+  const normalizedIcalUrl = normalizeCalendarUrl(selectedCalendar.icalUrl);
+  const webcalUrl = normalizedIcalUrl.replace(/^https:/i, 'webcal:');
+
+  const fallbackTimer = setTimeout(() => {
+    window.open(normalizedIcalUrl, '_blank', 'noopener,noreferrer');
+  }, 1200);
+
+  window.addEventListener(
+    'blur',
+    () => {
+      clearTimeout(fallbackTimer);
+    },
+    { once: true }
+  );
+
+  window.location.href = webcalUrl;
+}
+
+  function handleCopyIcs() {
+    if (!selectedCalendar?.icalUrl) return;
+    const normalizedIcalUrl = normalizeCalendarUrl(selectedCalendar.icalUrl);
+    copyText(normalizedIcalUrl);
+    alert('Enlace iCal copiado al portapapeles.');
+  }
+
+  function closeModal() {
+    googleModal.classList.remove('is-open');
+    googleModal.setAttribute('aria-hidden', 'true');
+  }
+
+  teamSelect.addEventListener('change', () => {
+    const team = teamSelect.value;
+    selectedCalendar = null;
+    populateCategories(team);
+    updateSelectionView(team, null);
+  });
+
+  categorySelect.addEventListener('change', () => {
+    const team = teamSelect.value;
+    const categories = TEAM_CALENDARS[team] || [];
+    const category = categories[Number(categorySelect.value)] || null;
+    selectedCalendar = category;
+    updateSelectionView(team, category);
+  });
+
+  closeModalBtn.addEventListener('click', closeModal);
+
+  googleModal.addEventListener('click', (event) => {
+    if (event.target === googleModal) closeModal();
+  });
+
+  modalCopyBtn.addEventListener('click', () => {
+    if (!selectedCalendar?.icalUrl) return;
+    const normalizedIcalUrl = normalizeCalendarUrl(selectedCalendar.icalUrl);
+    copyText(normalizedIcalUrl);
+    alert('Enlace iCal copiado otra vez.');
+  });
+
+  renderTeams();
+  reconnectDynamicButtons();
+
+  console.assert(Array.isArray(TEAM_CALENDARS.AIP), 'AIP debe tener un arreglo de categorías.');
+  console.assert(getTeams().includes('CSA'), 'CSA debe existir en la lista de equipos.');
+  console.assert(
+    normalizeCalendarUrl('//calendar.google.com/test.ics') === 'https://calendar.google.com/test.ics',
+    'Debe completar URLs que comienzan con //'
+  );
+  console.assert(
+    normalizeCalendarUrl('calendar.google.com/test.ics') === 'https://calendar.google.com/test.ics',
+    'Debe completar URLs sin protocolo.'
+  );
+</script>
