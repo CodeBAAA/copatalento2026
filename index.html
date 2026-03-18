@@ -460,14 +460,12 @@
               <span class="pill">Categoría: —</span>
             </div>
             <h3 class="selection-title">Todavía no has seleccionado un calendario</h3>
-            <p class="selection-copy">Cuando elijas una categoría, aquí aparecerán los botones para abrir el calendario y suscribirte según tu plataforma.</p>
             <div class="action-row">
               <button class="btn btn-primary" id="googleBtn" disabled>Google Calendar</button>
               <button class="btn btn-secondary" id="outlookBtn" disabled>Outlook / Apple / iCal</button>
               <button class="btn btn-secondary" id="copyIcsBtn" disabled>Copiar enlace iCal</button>
             </div>
             <div class="helper">
-              Google Calendar agrega calendarios publicados desde <strong>Other calendars → From URL</strong>. Outlook permite suscribirse a calendarios iCal en línea.
             </div>
           </div>
         </div>
@@ -660,13 +658,11 @@
       selectionResult.innerHTML = `
         ${pills}
         <h3 class="selection-title">Todavía no has seleccionado un calendario</h3>
-        <p class="selection-copy">Cuando elijas una categoría, aquí aparecerán los botones para abrir el calendario y suscribirte según tu plataforma.</p>
         <div class="action-row">
           <button class="btn btn-primary" id="googleBtn" disabled>Google Calendar</button>
           <button class="btn btn-secondary" id="outlookBtn" disabled>Outlook / Apple / iCal</button>
           <button class="btn btn-secondary" id="copyIcsBtn" disabled>Copiar enlace iCal</button>
         </div>
-        <div class="helper">Google Calendar agrega calendarios publicados desde <strong>Other calendars → From URL</strong>. Outlook permite suscribirse a calendarios iCal en línea.</div>
       `;
       reconnectDynamicButtons();
       return;
@@ -727,25 +723,63 @@
     window.open(normalizedPublicUrl, '_blank', 'noopener,noreferrer');
   }
 
+function toWebcalUrl(value) {
+  const normalized = normalizeCalendarUrl(value);
+  if (!normalized) return '';
+
+  try {
+    const url = new URL(normalized);
+    return `webcal://${url.host}${url.pathname}${url.search}${url.hash}`;
+  } catch (error) {
+    console.warn('URL iCal inválida', error);
+    return '';
+  }
+}
+
+function toWebcalUrl(value) {
+  const normalized = normalizeCalendarUrl(value);
+  if (!normalized) return '';
+
+  try {
+    const url = new URL(normalized);
+    return `webcal://${url.host}${url.pathname}${url.search}${url.hash}`;
+  } catch (error) {
+    console.warn('URL iCal inválida', error);
+    return '';
+  }
+}
+
 function handleOutlookSubscribe() {
   if (!selectedCalendar?.icalUrl) return;
 
   const normalizedIcalUrl = normalizeCalendarUrl(selectedCalendar.icalUrl);
-  const webcalUrl = normalizedIcalUrl.replace(/^https:/i, 'webcal:');
+  const webcalUrl = toWebcalUrl(normalizedIcalUrl);
 
-  const fallbackTimer = setTimeout(() => {
+  if (!webcalUrl) return;
+
+  let fallbackTriggered = false;
+
+  const fallbackToHttps = () => {
+    if (fallbackTriggered) return;
+    fallbackTriggered = true;
     window.open(normalizedIcalUrl, '_blank', 'noopener,noreferrer');
-  }, 1200);
+  };
 
-  window.addEventListener(
-    'blur',
-    () => {
-      clearTimeout(fallbackTimer);
-    },
-    { once: true }
-  );
+  const timeoutId = setTimeout(fallbackToHttps, 1500);
 
-  window.location.href = webcalUrl;
+  const handleBlur = () => {
+    clearTimeout(timeoutId);
+    window.removeEventListener('blur', handleBlur);
+  };
+
+  window.addEventListener('blur', handleBlur, { once: true });
+
+  const tempLink = document.createElement('a');
+  tempLink.href = webcalUrl;
+  tempLink.style.display = 'none';
+  document.body.appendChild(tempLink);
+  tempLink.click();
+  tempLink.remove();
 }
 
   function handleCopyIcs() {
